@@ -9,8 +9,8 @@ exports = function(payload) {
   
   try {
     let jobTitle     = "Github Push: " + payload.repository.full_name;
-    let jobUserName  = payload.pusher.name;
-    let jobUserEmail = payload.pusher.email;
+    let jobUserName  = payload.pusher ? payload.pusher.name : 'undefined';
+    let jobUserEmail = payload.pusher ? payload.pusher.email : 'undefined';
     const newPayload = {
       jobType:    "githubPush",
       source:     "github", 
@@ -30,6 +30,7 @@ exports = function(payload) {
     context.functions.execute("addJobToQueue", newPayload, jobTitle, jobUserName, jobUserEmail);  
   } catch(err) {
     console.log(err);
+    throw err;
   }
   
 };
