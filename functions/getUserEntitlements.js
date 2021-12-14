@@ -9,7 +9,7 @@ exports = async function(payload) {
   // get the queue collection
   const entitlementDocuments = context.services.get("mongodb-atlas").db(db_name).collection(coll_name);
   const entitlementMapping = await entitlementDocuments.findOne({ 'slack_user_id': slack_user_id });
-  
+  console.log("checking entitlements")
   // if user has specific entitlements
   if (entitlementMapping && entitlementMapping.repos && entitlementMapping.repos.length > 0) {
     returnObject.repos = entitlementMapping.repos;
